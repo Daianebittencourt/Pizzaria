@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+//criar uma migration: yarn prisma migrate dev (comando) - serve para criar o que está na model User no BD
+model User { //usuário - pessoas que trabalham na pizzaria vão fazer login e acessar o sistema.
+  id         String    @id @default(uuid()) //uuid - auto increment
+  name       String
+  email      String
+  password   String
+  created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  updated_at DateTime? @default(now())
+
+  @@map("users") //mapeando a criação - nome users
+}
+
+model Category { //categorias do produtos, por exemplo: pizza, refrigerante e etc
+  id         String    @id @default(uuid())
+  name       String
+  created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  updated_at DateTime? @default(now())
+  products   Product[] //relacionando que a categoria pode ter N produtos | relação 1:N
+
+  @@map("categories")
+}
+
+model Product { //produtos ex: pizza de queijo, coca-cola e etc
+  id          String    @id @default(uuid())
+  name        String
+  price       String
+  description String
+  banner      String
+  created_at  DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  updated_at  DateTime? @default(now())
+
+  categories  Category @relation(fields: [category_id], references: [id]) //criação da relação da categoria com o produto pelo ID
+
+  items Item[] //relação
+
+  //a categoria pode estar em vários produtos cadastrado 
+  @@map("products")
+  category_id String // ao cadastrar passar o id da categoria do produto que será cadastrado
+  
+
+}
+
+model Order { //mesa - utilizado para abrir a mesa do cliente
+  id     String  @id @default(uuid())
+  table  Int //mesa
+  status Boolean @default(false) //quando abrir o pedido vai iniciar como false e após a conclusão vira true.
+  draft  Boolean @default(true) //o pedido sempre vai iniciar como rascunho e após apertar o botão concluir vira false e deixa de ser raschunho.
+  name   String?
+
+  created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  updated_at DateTime? @default(now())
+
+  @@map("orders")
+  items Item[] //relação
+}
+
+model Item { //itens na mesa
+  id String @id @default(uuid())
+  amount Int //quantidade de itens solicitados
+
+  created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  updated_at DateTime? @default(now())
+
+  orders Order @relation(fields: [order_id], references: [id])
+  products Product @relation(fields: [product_id], references: [id])
+
+  @@map("items")
+  order_id String
+  product_id String
+}
