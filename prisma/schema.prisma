@@ -18,6 +18,7 @@ model User { //usuário - pessoas que trabalham na pizzaria vão fazer login e a
   password   String
   created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
   updated_at DateTime? @default(now())
+  orders Order[]
 
   @@map("users") //mapeando a criação - nome users
 }
@@ -62,8 +63,11 @@ model Order { //mesa - utilizado para abrir a mesa do cliente
   created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
   updated_at DateTime? @default(now())
 
+  users User @relation(fields: [user_id], references: [id])
+
   @@map("orders")
   items Item[] //relação
+  user_id String
 }
 
 model Item { //itens na mesa
