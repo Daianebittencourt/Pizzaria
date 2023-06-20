@@ -32,6 +32,7 @@ class AuthUserService{ //para login/autenticação no sistema
 
          //gerando token para o usuário logado
          const token = sign(
+
             {
             name: findUserByEmail.id, //enviando para o payload | houve a busca do usuário na variável findUserByEmail
             email: findUserByEmail  //informações que vão ficar no token
@@ -39,8 +40,10 @@ class AuthUserService{ //para login/autenticação no sistema
 
         process.env.JWT_SECRET, //secret key - foi criado uma hash e armazenada em uma variável ambiente no .env
         {//são options 
+
             subject: findUserByEmail.id, //estou pegando o id usuário e colocando no token
             expiresIn: '30d' //o token expira em 30d - alterar depois por questões de segurança.
+
 
         }
         
