@@ -1,5 +1,7 @@
 {
   "name": "Projeto_Pizzaria",
+  "desenvolvedora":"Daiane Bittencourt da Silva",
+  "contato": "https://linktr.ee/daianebittencourtdasilva",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",

@@ -12,12 +12,12 @@ datasource db {
 
 //criar uma migration: yarn prisma migrate dev (comando) - serve para criar o que está na model User no BD
 model User {
-  id         String    @id @default(uuid()) //uuid - auto increment
+  id         String   @id @default(uuid()) //uuid - auto increment
   name       String
   email      String
   password   String
-  created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
-  updated_at DateTime? @default(now())
+  created_at DateTime @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  updated_at DateTime @default(now())
   orders     Order[]
 
   @@map("users") //mapeando a criação - nome users
@@ -26,21 +26,21 @@ model User {
 model Category {
   id         String    @id @default(uuid())
   name       String
-  created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
-  updated_at DateTime? @default(now())
+  created_at DateTime  @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  updated_at DateTime  @default(now())
   products   Product[] //relacionando que a categoria pode ter N produtos | relação 1:N
 
   @@map("categories")
 }
 
 model Product {
-  id          String    @id @default(uuid())
+  id          String   @id @default(uuid())
   name        String
   price       String
   description String
   banner      String
-  created_at  DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
-  updated_at  DateTime? @default(now())
+  created_at  DateTime @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  updated_at  DateTime @default(now())
 
   category_id String // ao cadastrar passar o id da categoria do produto que será cadastrado
   categories  Category @relation(fields: [category_id], references: [id]) //criação da relação da categoria com o produto pelo ID
@@ -58,13 +58,13 @@ model Order {
   draft  Boolean @default(true) //o pedido sempre vai iniciar como rascunho e após apertar o botão concluir vira false e deixa de ser raschunho.
   name   String?
 
-  created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
-  updated_at DateTime? @default(now())
+  created_at DateTime @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  updated_at DateTime @default(now())
 
   user_id String
   users   User   @relation(fields: [user_id], references: [id])
   items   Item[] //relação
-  
+
   @@map("orders")
 }
 
@@ -72,14 +72,14 @@ model Item {
   id     String @id @default(uuid())
   amount Int //quantidade de itens solicitados
 
-  created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
-  updated_at DateTime? @default(now())
+  created_at DateTime @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  updated_at DateTime @default(now())
 
   product_id String
   products   Product @relation(fields: [product_id], references: [id])
 
-  order_id   String
-  orders     Order   @relation(fields: [order_id], references: [id])
-  
+  order_id String
+  orders   Order  @relation(fields: [order_id], references: [id])
+
   @@map("items")
 }
