@@ -11,19 +11,19 @@ datasource db {
 }
 
 //criar uma migration: yarn prisma migrate dev (comando) - serve para criar o que está na model User no BD
-model User { //usuário - pessoas que trabalham na pizzaria vão fazer login e acessar o sistema.
+model User {
   id         String    @id @default(uuid()) //uuid - auto increment
   name       String
   email      String
   password   String
   created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
   updated_at DateTime? @default(now())
-  orders Order[]
+  orders     Order[]
 
   @@map("users") //mapeando a criação - nome users
 }
 
-model Category { //categorias do produtos, por exemplo: pizza, refrigerante e etc
+model Category {
   id         String    @id @default(uuid())
   name       String
   created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
@@ -33,7 +33,7 @@ model Category { //categorias do produtos, por exemplo: pizza, refrigerante e et
   @@map("categories")
 }
 
-model Product { //produtos ex: pizza de queijo, coca-cola e etc
+model Product {
   id          String    @id @default(uuid())
   name        String
   price       String
@@ -42,18 +42,16 @@ model Product { //produtos ex: pizza de queijo, coca-cola e etc
   created_at  DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
   updated_at  DateTime? @default(now())
 
+  category_id String // ao cadastrar passar o id da categoria do produto que será cadastrado
   categories  Category @relation(fields: [category_id], references: [id]) //criação da relação da categoria com o produto pelo ID
 
   items Item[] //relação
 
   //a categoria pode estar em vários produtos cadastrado 
   @@map("products")
-  category_id String // ao cadastrar passar o id da categoria do produto que será cadastrado
-  
-
 }
 
-model Order { //mesa - utilizado para abrir a mesa do cliente
+model Order {
   id     String  @id @default(uuid())
   table  Int //mesa
   status Boolean @default(false) //quando abrir o pedido vai iniciar como false e após a conclusão vira true.
@@ -63,24 +61,25 @@ model Order { //mesa - utilizado para abrir a mesa do cliente
   created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
   updated_at DateTime? @default(now())
 
-  users User @relation(fields: [user_id], references: [id])
-
-  @@map("orders")
-  items Item[] //relação
   user_id String
+  users   User   @relation(fields: [user_id], references: [id])
+  items   Item[] //relação
+  
+  @@map("orders")
 }
 
-model Item { //itens na mesa
-  id String @id @default(uuid())
+model Item {
+  id     String @id @default(uuid())
   amount Int //quantidade de itens solicitados
 
   created_at DateTime? @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
   updated_at DateTime? @default(now())
 
-  orders Order @relation(fields: [order_id], references: [id])
-  products Product @relation(fields: [product_id], references: [id])
-
-  @@map("items")
-  order_id String
   product_id String
+  products   Product @relation(fields: [product_id], references: [id])
+
+  order_id   String
+  orders     Order   @relation(fields: [order_id], references: [id])
+  
+  @@map("items")
 }
