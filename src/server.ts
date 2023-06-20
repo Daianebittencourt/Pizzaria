@@ -1,5 +1,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import 'express-async-errors';
+// Dai falta adicionar a tipagem do Cors
+// [X] npm i --save-dev @types/cors ou yarn add @types/cors -D
 import cors from 'cors';
 
 import {router} from './routes'
