@@ -1,5 +1,6 @@
 import prismaClient from "../../prisma";
 import { compare } from "bcryptjs"; // para verificar se a senha está correta 
+import { sign } from 'jsonwebtoken' //registar/gerar token
 
 interface AuthRequest{ //vai solicitar o e-mail e senha para fazer login
     email: string;
@@ -29,7 +30,28 @@ class AuthUserService{ //para login/autenticação no sistema
             throw new Error ("Usuário ou senha incorreto!")
         }
 
-        return{ok: true}
+        //gerando token para o usuário logado
+        const token = sign(
+            {
+            name: findUserByEmail.id, //enviando para o payload | houve a busca do usuário na variável findUserByEmail
+            email: findUserByEmail  //informações que vão ficar no token
+        },
+
+        process.env.JWT_SECRET, //secret key - foi criado uma hash e armazenada em uma variável ambiente no .env
+        {//são options 
+            subject: findUserByEmail.id,
+            expiresIn: '30d' //o token expira em 30d
+
+        }
+        
+        )
+
+        return{
+            id: findUserByEmail.id,
+            name: findUserByEmail.name,
+            email: findUserByEmail.email,
+            token: token,
+        }
 
     }
 }
