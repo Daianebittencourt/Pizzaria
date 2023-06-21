@@ -12,20 +12,17 @@ const createUserController = new CreateUserController(); // verificar se está c
 const authUserController = new AuthUserController();
 const detailUserController = new DetailUserController();
 
-
-//const createUserController = CreateUserController; // verificar se está correto, mas está rodando e as rotas estão funcionando 
-//const authUserController = AuthUserController;
-
-
-//rotas USERS 
+//rotas USERS - utilizada para cadastrar usuário
 //bate na rota /users -> chama o controller
 //router.post('/users', new createUserController().handle) //instânciando o controller | handle para que serve?
  router.post('/users', createUserController.handle)
-//rota para logar usuário
+
+//rota para logar usuário - tipo post
 router.post('/login', authUserController.handle)
 
-//rota para detalhes do usuário - vai chamar o middleware e vai executar
-router.get('/detail', isAuthenticated, detailUserController.handle) //buscando as informações - tipo get
+//rota para detalhes do usuário - vai chamar o middleware para essa rota interna e vai executar
+//buscando as informações - tipo get
+router.get('/detail', isAuthenticated, detailUserController.handle) 
 
 
 export{ router };
