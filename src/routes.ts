@@ -1,4 +1,4 @@
-import { Router} from "express";
+import { Router } from "express";
 import { CreateUserController } from "./controllers/user/CreateUserController";
 import { AuthUserController } from "./controllers/user/AuthUserController";
 import { DetailUserController } from "./controllers/user/DetailUserController";
@@ -19,7 +19,7 @@ const detailUserController = DetailUserController;
 //rotas USERS 
 //bate na rota /users -> chama o controller
 //router.post('/users', new createUserController().handle) //instânciando o controller | handle para que serve?
- router.post('/users', new createUserController().handle)
+router.post('/users', new createUserController().handle)
 //rota para logar usuário
 router.post('/login', new authUserController().handle)
 
@@ -27,4 +27,4 @@ router.post('/login', new authUserController().handle)
 router.get('/detail', isAuthenticated, new detailUserController().handle) //buscando as informações - tipo get
 
 
-export{ router };
+export { router };
