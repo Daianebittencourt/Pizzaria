@@ -5,6 +5,7 @@ import { DetailUserController } from "./controllers/user/DetailUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { CreateCategoryController } from "./controllers/category/CreateCategoryController";
 import { ListCategoryController } from "./controllers/category/ListCategoryController";
+import { CreateProductController } from "./controllers/product/CreateProductController";
 
 const router = Router();
 
@@ -15,6 +16,7 @@ const authUserController = new AuthUserController();
 const detailUserController = new DetailUserController();
 const createCategoryController = new CreateCategoryController();
 const listCategoryController = new ListCategoryController();
+const createProductController = new CreateProductController();
 
 //ROTAS USERS - utilizada para cadastrar usuário
 //bate na rota /users -> chama o controller
@@ -35,5 +37,10 @@ router.post('/category', isAuthenticated, createCategoryController.handle)
 
 //rota para listar todas as categorias
 router.get('/list/category', isAuthenticated, listCategoryController.handle)
+
+
+//ROTAS PRODUCT
+//rota para cadastrar um produto
+router.post('/product', isAuthenticated, createProductController.handle)
 
 export { router };
