@@ -6,6 +6,9 @@ import { isAuthenticated } from "./middlewares/isAuthenticated";
 import { CreateCategoryController } from "./controllers/category/CreateCategoryController";
 import { ListCategoryController } from "./controllers/category/ListCategoryController";
 import { CreateProductController } from "./controllers/product/CreateProductController";
+import uploadConfig from './config/multer'
+
+import multer from 'multer';
 
 const router = Router();
 
@@ -18,6 +21,8 @@ const createCategoryController = new CreateCategoryController();
 const listCategoryController = new ListCategoryController();
 const createProductController = new CreateProductController();
 
+//configuração 
+const upload = multer(uploadConfig.upload("./tmp"))
 //ROTAS USERS - utilizada para cadastrar usuário
 //bate na rota /users -> chama o controller
 //rota para cadastrar usuário
@@ -41,6 +46,7 @@ router.get('/list/category', isAuthenticated, listCategoryController.handle)
 
 //ROTAS PRODUCT
 //rota para cadastrar um produto
-router.post('/product', isAuthenticated, createProductController.handle)
+//single - pois só vai aceitar um arquivo
+router.post('/product', isAuthenticated, upload.single('file'), createProductController.handle)
 
 export { router };

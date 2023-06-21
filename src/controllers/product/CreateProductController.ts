@@ -7,21 +7,31 @@ class CreateProductController {
 
         const { name, price, description, category_id } = request.body;
 
-        let banner = ' ';
 
         //conexão com a service
         const createProductService = new CreateProductService();
 
-        //executar 
-        const product = await createProductService.execute({
-            name,
-            price,
-            description,
-            banner,
-            category_id,
-        });
+        //o produto necessita de foto para ser cadastrado
+        if (!request.file) {
+            throw new Error("Erro ao enviar foto!")
+        } else {
 
-        return response.json(product);
+            const { originalname, filename } = request.file;
+
+            console.log(filename);
+
+            //executar 
+            const product = await createProductService.execute({
+                name,
+                price,
+                description,
+                banner: "",
+                category_id,
+            });
+
+            return response.json(product)
+        }
+
     }
 
 }
