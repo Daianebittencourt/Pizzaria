@@ -16,10 +16,12 @@ const detailUserController = new DetailUserController();
 //bate na rota /users -> chama o controller
 //router.post('/users', new createUserController().handle) //instânciando o controller | handle para que serve?
 
-router.post('/users', new createUserController().handle)
-//rota para logar usuário
-router.post('/login', new authUserController().handle)
+//router.post('/users', new createUserController().handle)
 
+//rota para logar usuário
+//router.post('/login', new authUserController().handle) | ERRADO
+//rota para cadastrar usuário
+router.post('/users', createUserController.handle)
 
 //rota para logar usuário - tipo post
 router.post('/login', authUserController.handle)
