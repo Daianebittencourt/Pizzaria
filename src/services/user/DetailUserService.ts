@@ -1,14 +1,10 @@
-import prismaClient from "../../prisma";
+import { prismaClient } from "../../prisma";
 
-
-class DetailUserService{ // detalhes do usuário 
-    async execute(){
-        return ({ok:true})
-
-
-    }
+// detalhes do usuário
+class DetailUserService {
+  async execute() {
+    return { ok: true };
+  }
 }
-
-
-export {DetailUserService} //quando usar o "export default DetailUSerService;"
-
+//quando usar o "export default DetailUSerService;" | Xarlys explicou!
+export { DetailUserService }; 
