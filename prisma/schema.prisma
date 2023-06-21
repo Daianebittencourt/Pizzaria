@@ -16,7 +16,7 @@ model User {
   name       String
   email      String
   password   String
-  created_at DateTime @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  created_at DateTime @default(now()) 
   updated_at DateTime @default(now())
   orders     Order[]
 
@@ -26,7 +26,7 @@ model User {
 model Category {
   id         String    @id @default(uuid())
   name       String
-  created_at DateTime  @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  created_at DateTime  @default(now()) 
   updated_at DateTime  @default(now())
   products   Product[] //relacionando que a categoria pode ter N produtos | relação 1:N
 
@@ -39,7 +39,7 @@ model Product {
   price       String
   description String
   banner      String
-  created_at  DateTime @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  created_at  DateTime @default(now()) 
   updated_at  DateTime @default(now())
 
   category_id String // ao cadastrar passar o id da categoria do produto que será cadastrado
@@ -72,7 +72,7 @@ model Item {
   id     String @id @default(uuid())
   amount Int //quantidade de itens solicitados
 
-  created_at DateTime @default(now()) // ? - significa opcional e o now pega o data/horário atual da solicitação
+  created_at DateTime @default(now()) 
   updated_at DateTime @default(now())
 
   product_id String

@@ -3,6 +3,7 @@ import { CreateUserController } from "./controllers/user/CreateUserController";
 import { AuthUserController } from "./controllers/user/AuthUserController";
 import { DetailUserController } from "./controllers/user/DetailUserController";
 import { isAuthenticated } from "./middlewares/isAuthenticated";
+import { CreateCategoryController } from "./controllers/category/CreateCategoryController";
 
 const router = Router();
 
@@ -11,15 +12,11 @@ const router = Router();
 const createUserController = new CreateUserController(); // verificar se está correto, mas está rodando e as rotas estão funcionando 
 const authUserController = new AuthUserController();
 const detailUserController = new DetailUserController();
+const createCategoryController = new CreateCategoryController();
 
-//rotas USERS - utilizada para cadastrar usuário
+//ROTAS USERS - utilizada para cadastrar usuário
 //bate na rota /users -> chama o controller
-//router.post('/users', new createUserController().handle) //instânciando o controller | handle para que serve?
 
-//router.post('/users', new createUserController().handle)
-
-//rota para logar usuário
-//router.post('/login', new authUserController().handle) | ERRADO
 //rota para cadastrar usuário
 router.post('/users', createUserController.handle)
 
@@ -30,5 +27,8 @@ router.post('/login', authUserController.handle)
 //buscando as informações - tipo get
 router.get('/detail', isAuthenticated, detailUserController.handle) 
 
+//ROTAS CATEGORY 
+//rota para cadastrar uma categoria 
+router.post('/category', isAuthenticated, createCategoryController.handle)
 
 export { router };

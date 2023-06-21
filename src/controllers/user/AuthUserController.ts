@@ -1,18 +1,21 @@
 import { Request, Response } from "express";
 import { AuthUserService } from "../../services/user/AuthUserService";
 
+//solicitando e-mail e senha para login | linha 7
 class AuthUserController{
     async handle (request: Request, response: Response){
-        const {email, password}=request.body; //solicitando e-mail e senha para login 
+        const {email, password}=request.body; 
 
-        const authUserService = new AuthUserService();  // inicializando a service 
+        // inicializando a service 
+        const authUserService = new AuthUserService();  
 
         const auth = await authUserService.execute({
             email,
             password
         })
 
-        return response.json(auth); // vai retornar o que foi armazenado na auth
+        // vai retornar o que foi armazenado na auth
+        return response.json(auth); 
     }
 
 

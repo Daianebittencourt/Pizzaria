@@ -35,6 +35,11 @@ export function isAuthenticated(
             process.env.JWT_SECRET
 
         ) as Payload;
+
+            //armazenando o ID do user que passar pelas rotas internas na variável user_id dentro do Request
+            //precisa fazer a tipagem no request
+            request.user_id = sub;
+
         return next();
 
         //barrando se der algum erro no token
