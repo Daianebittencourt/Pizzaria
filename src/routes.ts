@@ -9,6 +9,7 @@ import { CreateProductController } from "./controllers/product/CreateProductCont
 import uploadConfig from './config/multer'
 
 import multer from 'multer';
+import { ListByCategoryController } from "./controllers/product/ListByCategoryController";
 
 const router = Router();
 
@@ -20,6 +21,7 @@ const detailUserController = new DetailUserController();
 const createCategoryController = new CreateCategoryController();
 const listCategoryController = new ListCategoryController();
 const createProductController = new CreateProductController();
+const listByCategoryController = new ListByCategoryController();
 
 //configuração 
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -48,5 +50,8 @@ router.get('/list/category', isAuthenticated, listCategoryController.handle)
 //rota para cadastrar um produto
 //single - pois só vai aceitar um arquivo
 router.post('/product', isAuthenticated, upload.single('file'), createProductController.handle)
+
+//rota para ver os produtos de determinada categoria
+router.get('/list/product', isAuthenticated, listByCategoryController.handle)
 
 export { router };

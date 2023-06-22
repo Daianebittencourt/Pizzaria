@@ -13,25 +13,23 @@ class CreateProductController {
 
         //o produto necessita de foto para ser cadastrado
         if (!request.file) {
-            throw new Error("Erro ao enviar foto!")
-        } else {
+           throw new Error("Erro ao enviar foto!")
+       } else {
 
-            const { originalname, filename } = request.file;
+            const { originalname, filename: banner } = request.file;
 
-            console.log(filename);
 
             //executar 
             const product = await createProductService.execute({
-                name,
-                price,
-                description,
-                banner: "",
-                category_id,
+                name: name,
+                price: price,
+                description: description,
+                banner: banner,
+                category_id: category_id,
             });
 
-            return response.json(product)
+            return response.json(product);
         }
-
     }
 
 }
