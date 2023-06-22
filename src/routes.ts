@@ -12,6 +12,8 @@ import multer from 'multer';
 import { ListByCategoryController } from "./controllers/product/ListByCategoryController";
 import { CreateOrderController } from "./controllers/order/CreateOrderController";
 import { DeleteOrderController } from "./controllers/order/DeleteOrderController";
+import { AddItemController } from "./controllers/order/AddItemController";
+import { DeleteItemController } from "./controllers/order/DeleteItemController";
 
 const router = Router();
 
@@ -26,6 +28,8 @@ const createProductController = new CreateProductController();
 const listByCategoryController = new ListByCategoryController();
 const createOrderController = new CreateOrderController();
 const deleteOrderController= new DeleteOrderController();
+const addItemController = new AddItemController();
+const deleteItemController = new DeleteItemController();
 
 //configuração 
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -64,5 +68,11 @@ router.post('/order', isAuthenticated, createOrderController.handle)
 
 //rota para deletar uma order
 router.delete('/delete/order', isAuthenticated, deleteOrderController.handle)
+
+//rota para criar um item
+router.post('/item', isAuthenticated, addItemController.handle)
+
+//rota para deletar um item da order - mesa
+router.delete('/delete/item', isAuthenticated, deleteItemController.handle)
 
 export { router };
