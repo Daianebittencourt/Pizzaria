@@ -14,6 +14,7 @@ import { CreateOrderController } from "./controllers/order/CreateOrderController
 import { DeleteOrderController } from "./controllers/order/DeleteOrderController";
 import { AddItemController } from "./controllers/order/AddItemController";
 import { DeleteItemController } from "./controllers/order/DeleteItemController";
+import { SendOrderController } from "./controllers/order/SendOrderController";
 
 const router = Router();
 
@@ -30,6 +31,7 @@ const createOrderController = new CreateOrderController();
 const deleteOrderController= new DeleteOrderController();
 const addItemController = new AddItemController();
 const deleteItemController = new DeleteItemController();
+const sendOrderController = new SendOrderController();
 
 //configuração 
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -74,5 +76,8 @@ router.post('/item', isAuthenticated, addItemController.handle)
 
 //rota para deletar um item da order - mesa
 router.delete('/delete/item', isAuthenticated, deleteItemController.handle)
+
+//rota para atualizar status do pedido
+router.put('/send/order', isAuthenticated, sendOrderController.handle)
 
 export { router };
