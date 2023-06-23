@@ -1,18 +1,18 @@
 import { prismaClient } from "../../prisma";
 
-interface SendOrderRequest{
-    order_id: string;
+interface FinishOrderRequest{
+    order_id;
 }
 
-class SendOrderService{
-    async execute({order_id}: SendOrderRequest){
+class FinishOrderService{
+    async execute ({order_id}: FinishOrderRequest){
 
         const order = await prismaClient.order.update({
             where:{
                 id: order_id
             },
             data:{
-                draft: false
+                status: true,
             }
         })
 
@@ -21,4 +21,4 @@ class SendOrderService{
     }
 }
 
-export { SendOrderService }
+export { FinishOrderService }

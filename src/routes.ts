@@ -15,6 +15,9 @@ import { DeleteOrderController } from "./controllers/order/DeleteOrderController
 import { AddItemController } from "./controllers/order/AddItemController";
 import { DeleteItemController } from "./controllers/order/DeleteItemController";
 import { SendOrderController } from "./controllers/order/SendOrderController";
+import { ListOrdersController } from "./controllers/order/ListOrdersController";
+import { DetailOrderController } from "./controllers/order/DetailOrderController";
+import { FinishOrderController } from "./controllers/order/FinishOrderController";
 
 const router = Router();
 
@@ -32,6 +35,9 @@ const deleteOrderController= new DeleteOrderController();
 const addItemController = new AddItemController();
 const deleteItemController = new DeleteItemController();
 const sendOrderController = new SendOrderController();
+const listOrdersController = new ListOrdersController();
+const detailOrderController= new DetailOrderController();
+const finishOrderController = new FinishOrderController();
 
 //configuração 
 const upload = multer(uploadConfig.upload("./tmp"))
@@ -79,5 +85,14 @@ router.delete('/delete/item', isAuthenticated, deleteItemController.handle)
 
 //rota para atualizar status do pedido
 router.put('/send/order', isAuthenticated, sendOrderController.handle)
+
+//listar os pedidos que foram finalizados
+router.get('/list/orders', isAuthenticated, listOrdersController.handle)
+
+// detalhes dos produtos
+router.get('/detail/orders', isAuthenticated, detailOrderController.handle )
+
+//atualizar o status do pedido - cozinha confirmando que o pedido está pronto
+router.put('/finish', isAuthenticated, finishOrderController.handle )
 
 export { router };
