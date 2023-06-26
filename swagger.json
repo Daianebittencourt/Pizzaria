@@ -1,0 +1,126 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "Pizzaria",
+        "description": "Documentação da API Pizzaria",
+        "contact":"https://linktr.ee/daianebittencourtdasilva",
+        "version": "1.0.0"
+    },
+    "basePath": "/",
+		"components": {
+			"securitySchemes": {
+				"bearerAuth": {
+					"type": "http",
+					"scheme": "bearer",
+					"bearerFormat": "JWT"
+				}
+			}
+		},
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "miguel",
+                                    "email": "miguel@teste.com",
+                                    "password": "12345678"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": { "description": "Bad Request"},
+                    "500": {"description": "Internal server error."},
+                    "200": {"description": "OK"}
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "email": "miguel@teste.com",
+                                    "password": "12345678"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Bad Request"
+                    },
+                    "500": {
+                        "description": "Internal server error."
+                    },
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/detail": {
+            "get": {
+                "description": "Rota que lista os detalhes do usuário",
+                "sumary": "Lista detalhes do usuário",
+                "tags": [
+                    "Users"
+                ],
+								
+                "parameters": [
+                    {
+                        "in": "parameters",
+                        "id": "id",
+                        "type": "string",
+                        "required": false
+                    }
+                ],
+                "responses": {
+									"400": {
+										"description": "Bad Request"
+								},
+								"500": {
+										"description": "Internal server error."
+								},
+								"200": {
+										"description": "OK"
+                    }
+                }
+            }
+        }
+    }
+}

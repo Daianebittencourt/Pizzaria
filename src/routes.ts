@@ -90,7 +90,8 @@ router.put('/send/order', isAuthenticated, sendOrderController.handle)
 router.get('/list/orders', isAuthenticated, listOrdersController.handle)
 
 // detalhes dos produtos
-router.get('/detail/orders', isAuthenticated, detailOrderController.handle )
+//http://localhost:3333/detail/orders/4c08e976-d9f8-4a9d-9c02-4de965d91bd1
+router.get('/detail/orders/:id', isAuthenticated, detailOrderController.handle )
 
 //atualizar o status do pedido - cozinha confirmando que o pedido está pronto
 router.put('/finish', isAuthenticated, finishOrderController.handle )

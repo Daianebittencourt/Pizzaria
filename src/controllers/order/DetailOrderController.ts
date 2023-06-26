@@ -3,7 +3,8 @@ import { DetailOrderService } from "../../services/order/DetailOrderService";
 
 class DetailOrderController{
     async handle (request: Request, response: Response){
-        const order_id = request.query.order_id as string;
+        //alteração de query para params - passar o id na rota
+        const order_id = request.params.id as string;
 
         const detailOrderService = new DetailOrderService();
 
