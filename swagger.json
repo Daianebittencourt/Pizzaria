@@ -96,10 +96,23 @@
         "/detail": {
             "get": {
                 "description": "Rota que lista os detalhes do usuário",
-                "sumary": "Lista detalhes do usuário",
                 "tags": [
                     "Users"
                 ],
+                "responses":{
+                    "200":{
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
 								
                 "parameters": [
                     {
