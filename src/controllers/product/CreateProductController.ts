@@ -5,7 +5,7 @@ class CreateProductController {
 
     async handle(request: Request, response: Response) {
 
-        const { name, price, description, category_id } = request.body;
+        const { name, price, description, category_id } = request.body; //alteração - body para params
 
 
         //conexão com a service
@@ -13,8 +13,8 @@ class CreateProductController {
 
         //o produto necessita de foto para ser cadastrado
         if (!request.file) {
-           throw new Error("Erro ao enviar foto!")
-       } else {
+            throw new Error("Erro ao enviar foto!")
+        } else {
 
             const { originalname, filename: banner } = request.file;
 

@@ -119,6 +119,150 @@
         }
         
     },
+    "/category": {
+        "post": {
+            "description": "Cadastrar uma categoria",
+                "security":[
+                    {
+                        "bearerAuth":[]
+                }
+                ],
+            "tags": [
+                "Category"
+            ],
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                }
+                            },
+                            "example": {
+                                "name": "Pizzas Salgadas"
+                                
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "400": { "description": "Bad Request"},
+                "500": {"description": "Internal server error."},
+                "200": {"description": "OK"}
+            }
+        }
+    },
+    "/list/category": {
+        "get": {
+            "description": "Listar todas as categorias",
+            "security":[
+                {
+                    "bearerAuth":[]
+            }
+            ],
+            "tags": [
+                "Category"
+            ],
+            "responses":{
+                "200":{
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "type":"array",
+                                    "$ref": "#/components/schema/ResponseCategory"
+ 
+                        }
+                    }
+                }
+            }						
+        }
+    }
+    
+},
+"/product": {
+    "post": {
+        "description": "Cadastrar um produto",
+            "security":[
+                {
+                    "bearerAuth":[]
+            }
+            ],
+        "tags": [
+            "Product"
+        ],
+        "requestBody": {
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "type": "object",
+                        "properties": {
+                            "name": {
+                                "type": "string"
+                            },
+                            "price": {
+                                "type": "integer"
+                            },
+                            "description": {
+                                "type": "string"
+                            },
+                            "banner": {
+                                "type": "string"
+                            },
+                            "category_id": {
+                                "type": "string"
+                            }
+                        },
+                        "example": {
+                            "name": "Pizza de Calabresa",
+                            "price":50,
+                            "description":"Calabresa ralada com cebola",
+                            "banner":"2ca938ce67c0b87c2b29acb7f5fee8f0-queijo.png",
+                            "category_id":"04e1ad9a-43b0-4d52-9c63-93dd971a40c6"
+
+                            
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "400": { "description": "Bad Request"},
+            "500": {"description": "Internal server error."},
+            "200": {"description": "OK"}
+        }
+    }
+        
+},
+"/list/product": {
+    "get": {
+        "description": "Listar todos os produtos de uma categoria",
+        "security":[
+            {
+                "bearerAuth":[]
+        }
+        ],
+        "tags": [
+            "Product"
+        ],
+        "responses":{
+            "200":{
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "type":"array",
+                                "$ref": "#/components/schema/ResponseProduct"
+
+                    }
+                }
+            }
+        }						
+    }
+}
+
+},
     "components":{
         "schema":{
             "ResponseDetail":{
@@ -137,6 +281,40 @@
             }
 
         },
+        "ResponseCategory":{
+            "type":"object",
+            "properties":{
+                "id":{
+                    "type":"string"
+                },
+                "name":{
+                    "type":"string"
+                }
+            }
+        },
+        "ResponseProduct":{
+            "type":"object",
+            "properties":{
+                "id":{
+                    "type":"string"
+                },
+                "name":{
+                    "type":"string"
+                },
+                "price":{
+                    "type":"integer"
+                },
+                "banner":{
+                    "type":"string"
+                },
+                "description":{
+                    "type":"string"
+                },
+                "category_id":{
+                    "type":"string"
+                }
+            }
+        },
 			"securitySchemes": {
 				"bearerAuth": {
                     "description":"Autenticação usando JWT",
@@ -146,5 +324,6 @@
     }
 }
 }
-    }
 }
+}
+
