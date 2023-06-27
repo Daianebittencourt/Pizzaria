@@ -75,13 +75,13 @@ router.get('/list/product', isAuthenticated, listByCategoryController.handle)
 router.post('/order', isAuthenticated, createOrderController.handle)
 
 //rota para deletar uma order
-router.delete('/delete/order', isAuthenticated, deleteOrderController.handle)
+router.delete('/delete/order/:id', isAuthenticated, deleteOrderController.handle)
 
 //rota para criar um item
 router.post('/item', isAuthenticated, addItemController.handle)
 
 //rota para deletar um item da order - mesa
-router.delete('/delete/item', isAuthenticated, deleteItemController.handle)
+router.delete('/delete/item/:id', isAuthenticated, deleteItemController.handle)
 
 //rota para atualizar status do pedido
 router.put('/send/order', isAuthenticated, sendOrderController.handle)
