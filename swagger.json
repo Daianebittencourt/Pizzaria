@@ -73,8 +73,8 @@
                                     }
                                 },
                                 "example": {
-                                    "email": "miguel@teste.com",
-                                    "password": "12345678"
+                                    "email": "root@root.com",
+                                    "password": "rootroot"
                                 }
                             }
                         }
@@ -95,7 +95,12 @@
         },
         "/detail": {
             "get": {
-                "description": "Rota que lista os detalhes do usuário",
+                "description": "Detalhes do usuário",
+                "security":[
+                    {
+                        "bearerAuth":[]
+                }
+                ],
                 "tags": [
                     "Users"
                 ],
@@ -104,36 +109,42 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "type":"array",
-                                    "items":{
-
-                                    }
-                                }
+                                        "$ref": "#/components/schema/ResponseDetail"
+     
                             }
                         }
                     }
-                },
-								
-                "parameters": [
-                    {
-                        "in": "parameters",
-                        "id": "id",
-                        "type": "string",
-                        "required": false
-                    }
-                ],
-                "responses": {
-									"400": {
-										"description": "Bad Request"
-								},
-								"500": {
-										"description": "Internal server error."
-								},
-								"200": {
-										"description": "OK"
-                    }
-                }
+                }						
             }
         }
+        
+    },
+    "components":{
+        "schema":{
+            "ResponseDetail":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"string"
+                    },
+                    "name":{
+                        "type":"string"
+                    },
+                            "email":{
+                                "type":"string"
+                            }
+                }
+            }
+
+        },
+			"securitySchemes": {
+				"bearerAuth": {
+                    "description":"Autenticação usando JWT",
+					"type": "http",
+					"scheme": "bearer",
+					"bearerFormat": "JWT"
+    }
+}
+}
     }
 }
