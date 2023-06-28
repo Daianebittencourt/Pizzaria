@@ -189,63 +189,91 @@
                 }
             }
         },
+        
         "/product": {
             "post": {
-                "description": "Cadastrar um produto",
-                "security": [
-                    {
-                        "bearerAuth": []
-                    }
-                ],
-                "tags": [
-                    "Product"
-                ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "name": {
-                                        "type": "string"
-                                    },
-                                    "price": {
-                                        "type": "integer"
-                                    },
-                                    "description": {
-                                        "type": "string"
-                                    },
-                                    "banner": {
-                                        "type": "string"
-                                    },
-                                    "category_id": {
-                                        "type": "string"
-                                    }
-                                },
-                                "example": {
-                                    "name": "Pizza de Calabresa",
-                                    "price": 50,
-                                    "description": "Calabresa ralada com cebola",
-                                    "banner": "2ca938ce67c0b87c2b29acb7f5fee8f0-queijo.png",
-                                    "category_id": "04e1ad9a-43b0-4d52-9c63-93dd971a40c6"
-                                }
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "400": {
-                        "description": "Bad Request"
-                    },
-                    "500": {
-                        "description": "Internal server error."
-                    },
-                    "200": {
-                        "description": "OK"
-                    }
+              "summary": "Create a new product",
+              "description": "Creates a new product with name, price, description, category_id, and an uploaded file",
+              "security": [
+                {
+                    "bearerAuth": []
                 }
+            ],
+            "tags": [
+                "Product"
+            ],
+              "consumes": [
+                "multipart/form-data"
+              ],
+              "produces": [
+                "application/json"
+              ],
+              "parameters": [
+                {
+                    "in": "formData",
+                    "name": "name",
+                    "description": "Product name",
+                    "schema": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                    "in": "formData",
+                    "name": "price",
+                    "description": "Product price",
+                    "schema": {
+                      "type": "integer"
+                    }
+                  },
+                  {
+                    "in": "formData",
+                    "name": "description",
+                    "description": "Product description",
+                    "schema": {
+                      "type": "string"
+                    }
+                  },
+                  {
+                      "in": "formData",
+                      "name": "banner",
+                      "description": "Product photo",
+                      "required": true,
+                      "schema": {
+                        "type": "file"
+                      }
+                    },
+                  {
+                    "in": "formData",
+                    "name": "category_id",
+                    "description": "Category ID",
+                    "schema": {
+                      "type": "string"
+                    }
+                 
+                }
+               
+              ],
+              "responses": {
+                "200": {
+                  "description": "Product created successfully",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/ResponseProduct1"
+                      }
+                    }
+                  }
+                },
+                "400": {
+                  "description": "Bad request"
+                },
+                "500": {
+                  "description": "Internal server error"
+                }
+              }
             }
         },
+        
         "/list/product": {
             "get": {
                 "description": "Listar todos os produtos de uma categoria",
@@ -431,8 +459,8 @@
                 }
             }
         },
-        "/send/order": {
-            "post": {
+        "/send/order/{id}": {
+            "put": {
                 "description": "Atualizar o status do pedido de rascunho para efetuado",
                 "security": [
                     {
@@ -442,23 +470,115 @@
                 "tags": [
                     "Order"
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "type": "object",
-                                "properties": {
-                                    "order_id": {
-                                        "type": "string"
-                                    }
-                                },
-                                "example": {
-                                    "order_id": "f0626b89-80a0-4b37-a481-a295b0b7dcbd"
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do item para atualizar"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schema/ResponseSendOrder"
                                 }
                             }
                         }
                     }
-                },
+                }
+            }
+        },
+        "/list/orders": {
+            "get": {
+                "description": "Listar todos os pedidos efetuados",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    
+                                    "$ref": "#/components/schema/ResponseProduct"
+                                    
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/detail/orders/{id}": {
+            "get": {
+                "description": "Listar os detalhes do pedido",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do item para atualizar"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schema/ResponseDetailOrder"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/finish/{id}": {
+            "put": {
+                "description": "Atualizar o pedido pronto - na cozinha",
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "tags": [
+                    "Order"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID do item para atualizar na cozinha"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schema/ResponseFinishOrder"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
                 "components": {
                     "schema": {
                         "ResponseDetail": {
@@ -558,6 +678,79 @@
                             }
                         }
                     },
+                    "ResponseListOrders": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "table": {
+                                "type": "integer"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "user_id": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "ResponseDetailOrder": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "amount": {
+                                "type": "integer"
+                            },
+                            "product_id": {
+                                "type": "string"
+                            },
+                            "order_id": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "ResponseFinishOrder": {
+                        "type": "object",
+                        "properties": {
+                            "order_id": {
+                                "type": "string"
+                            },
+                            "table": {
+                                "type": "integer"
+                            },
+                            "status": {
+                                "type": "true"
+                            },
+                            "draft": {
+                                "type": "false"
+                            },
+                            "name": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "ResponseProduct1": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string"
+                          },
+                          "price": {
+                            "type": "number"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "banner": {
+                            "type": "string"
+                          },
+                          "category_id": {
+                            "type": "string"
+                          },
+
                     "securitySchemes": {
                         "bearerAuth": {
                             "description": "Autenticação usando JWT",
@@ -571,3 +764,6 @@
         }
     }
 }
+
+         
+  

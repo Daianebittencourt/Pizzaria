@@ -5,7 +5,7 @@ class CreateProductController {
 
     async handle(request: Request, response: Response) {
 
-        const { name, price, description, category_id } = request.body; //alteração - body para params
+        const { name, price, description, category_id } = request.body; //era body
 
 
         //conexão com a service

@@ -4,7 +4,7 @@ import { FinishOrderService } from "../../services/order/FinishOrderService";
 class FinishOrderController{
     async handle(request: Request, response: Response){
         //vai mandar no corpo da requisição JSON
-        const {order_id} = request.body;
+        const order_id = request.params.id;
 
         //inicializando a Service
         const finishOrderService = new FinishOrderService();

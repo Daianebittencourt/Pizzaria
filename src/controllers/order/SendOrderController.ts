@@ -3,7 +3,7 @@ import { SendOrderService } from "../../services/order/SendOrderService";
 
 class SendOrderController{
     async handle(request: Request, response: Response){
-        const {order_id} = request.body;
+        const order_id = request.params.id;
 
         // conexão com a service
         const sendOrderService = new SendOrderService();

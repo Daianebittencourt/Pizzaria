@@ -84,7 +84,7 @@ router.post('/item', isAuthenticated, addItemController.handle)
 router.delete('/delete/item/:id', isAuthenticated, deleteItemController.handle)
 
 //rota para atualizar status do pedido
-router.put('/send/order', isAuthenticated, sendOrderController.handle)
+router.put('/send/order/:id', isAuthenticated, sendOrderController.handle)
 
 //listar os pedidos que foram finalizados
 router.get('/list/orders', isAuthenticated, listOrdersController.handle)
@@ -94,6 +94,6 @@ router.get('/list/orders', isAuthenticated, listOrdersController.handle)
 router.get('/detail/orders/:id', isAuthenticated, detailOrderController.handle )
 
 //atualizar o status do pedido - cozinha confirmando que o pedido está pronto
-router.put('/finish', isAuthenticated, finishOrderController.handle )
+router.put('/finish/:id', isAuthenticated, finishOrderController.handle )
 
 export { router };
